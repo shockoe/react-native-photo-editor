@@ -1,15 +1,12 @@
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeModules } from 'react-native';
 const { PhotoEditor } = NativeModules;
 
 let exportObject = {};
-const eventEmitter = new NativeEventEmitter(PhotoEditor);
 
 const defaultOptions = {
   path: '',
   stickers: [],
 };
-
-let subscription;
 
 exportObject = {
   open: (optionsEditor) => {
@@ -29,18 +26,6 @@ exportObject = {
         reject(e);
       }
     });
-  },
-  addListener: (event, callback) => {
-    subscription = eventEmitter.addListener(event, data => {
-      callback(data);
-    })
-  },
-  removeListeners: (event) => {    
-    if (subscription) {
-      subscription.remove()
-    }
-    
-    eventEmitter.removeAllListeners(event)
   },
 };
 
